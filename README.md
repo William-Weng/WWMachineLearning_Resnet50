@@ -36,7 +36,7 @@ final class ViewController: UIViewController {
         super.viewDidLoad()
         
         Task {
-            _ = await WWMachineLearning.Resnet50.shard.loadModel()
+            _ = await WWMachineLearning.Resnet50.shared.loadModel()
         }
     }
     
@@ -45,7 +45,7 @@ final class ViewController: UIViewController {
         let image = sender.backgroundImage(for: .normal)
         
         Task {
-            switch await WWMachineLearning.Resnet50.shard.probability(image: image) {
+            switch await WWMachineLearning.Resnet50.shared.probability(image: image) {
             case .failure(let error): sender.setTitle(error.localizedDescription, for: .normal)
             case .success(let info):
                 sender.setTitle(info.label, for: .normal)

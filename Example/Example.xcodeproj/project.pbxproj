@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8144A77B2E4B35D800422B29 /* WWMachineLearning_Resnet50 in Frameworks */ = {isa = PBXBuildFile; productRef = 8144A77A2E4B35D800422B29 /* WWMachineLearning_Resnet50 */; };
 		816373202DB208920064577B /* food.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8163731F2DB208920064577B /* food.jpg */; };
 		817567FC2CA2C2B400B24577 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 817567FB2CA2C2B400B24577 /* AppDelegate.swift */; };
 		817568002CA2C2B400B24577 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 817567FF2CA2C2B400B24577 /* ViewController.swift */; };
@@ -15,7 +16,6 @@
 		817568082CA2C2B500B24577 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 817568062CA2C2B500B24577 /* LaunchScreen.storyboard */; };
 		819827132DB24D770082DA60 /* fish.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 819827122DB24D770082DA60 /* fish.jpg */; };
 		819827152DB24DE70082DA60 /* airplane.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 819827142DB24DE70082DA60 /* airplane.jpg */; };
-		81B3E6782E4AEC06001D1587 /* WWMachineLearning_Resnet50 in Frameworks */ = {isa = PBXBuildFile; productRef = 81B3E6772E4AEC06001D1587 /* WWMachineLearning_Resnet50 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,7 +36,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				81B3E6782E4AEC06001D1587 /* WWMachineLearning_Resnet50 in Frameworks */,
+				8144A77B2E4B35D800422B29 /* WWMachineLearning_Resnet50 in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -132,7 +132,7 @@
 			);
 			name = Example;
 			packageProductDependencies = (
-				81B3E6772E4AEC06001D1587 /* WWMachineLearning_Resnet50 */,
+				8144A77A2E4B35D800422B29 /* WWMachineLearning_Resnet50 */,
 			);
 			productName = Example;
 			productReference = 817567F82CA2C2B400B24577 /* Example.app */;
@@ -163,7 +163,7 @@
 			);
 			mainGroup = 817567EF2CA2C2B400B24577;
 			packageReferences = (
-				81B3E6762E4AEC06001D1587 /* XCRemoteSwiftPackageReference "WWMachineLearning_Resnet50" */,
+				8144A7792E4B35D800422B29 /* XCRemoteSwiftPackageReference "WWMachineLearning_Resnet50" */,
 			);
 			productRefGroup = 817567F92CA2C2B400B24577 /* Products */;
 			projectDirPath = "";
@@ -431,20 +431,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		81B3E6762E4AEC06001D1587 /* XCRemoteSwiftPackageReference "WWMachineLearning_Resnet50" */ = {
+		8144A7792E4B35D800422B29 /* XCRemoteSwiftPackageReference "WWMachineLearning_Resnet50" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/William-Weng/WWMachineLearning_Resnet50";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.1.0;
+				minimumVersion = 1.1.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		81B3E6772E4AEC06001D1587 /* WWMachineLearning_Resnet50 */ = {
+		8144A77A2E4B35D800422B29 /* WWMachineLearning_Resnet50 */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 81B3E6762E4AEC06001D1587 /* XCRemoteSwiftPackageReference "WWMachineLearning_Resnet50" */;
+			package = 8144A7792E4B35D800422B29 /* XCRemoteSwiftPackageReference "WWMachineLearning_Resnet50" */;
 			productName = WWMachineLearning_Resnet50;
 		};
 /* End XCSwiftPackageProductDependency section */

@@ -68,7 +68,7 @@ public extension FileManager {
     /// 測試該檔案是否存在 / 是否為資料夾
     /// - Parameter url: 檔案的URL路徑
     /// - Returns: Constant.FileInformation
-    func _fileExists(with url: URL?) -> WWMachineLearning.Resnet50.FileInformation {
+    func _fileExists(with url: URL?) -> WWMachineLearning.FileInformation {
 
         guard let url = url else { return (false, false) }
         
@@ -80,17 +80,21 @@ public extension FileManager {
 }
 
 // MARK: - UIImage
-extension UIImage {
+public extension UIImage {
     
     /// 產生CVPixelBuffer (影片傳輸用)
+    /// - Parameters:
+    ///   - allocator: CFAllocator?
+    ///   - formatType: OSType
+    ///   - colorSpace: CGColorSpace
     /// - Returns: CVPixelBuffer?
-    func _pixelBuffer() -> CVPixelBuffer? {
+    func _pixelBuffer(allocator: CFAllocator? = kCFAllocatorDefault, formatType: OSType = kCVPixelFormatType_32ARGB, colorSpace: CGColorSpace = CGColorSpaceCreateDeviceRGB()) -> CVPixelBuffer? {
         
         autoreleasepool {
-            return cgImage?._pixelBuffer()
+            return cgImage?._pixelBuffer(allocator: allocator, formatType: formatType, colorSpace: colorSpace)
         }
     }
-    
+
     /// 改變圖片大小
     /// - Returns: UIImage
     /// - Parameters:
@@ -112,20 +116,24 @@ extension UIImage {
 extension CGImage {
     
     /// [CGImage => CVPixelBuffer](https://juejin.cn/post/7064214474130980878)
+    /// - Parameters:
+    ///   - allocator: CFAllocator?
+    ///   - formatType: OSType
+    ///   - colorSpace: CGColorSpace
     /// - Returns: [CVPixelBuffer?](https://blog.csdn.net/q345911572/article/details/117551676)
-    func _pixelBuffer() -> CVPixelBuffer? {
+    func _pixelBuffer(allocator: CFAllocator? = kCFAllocatorDefault, formatType: OSType = kCVPixelFormatType_32ARGB, colorSpace: CGColorSpace = CGColorSpaceCreateDeviceRGB()) -> CVPixelBuffer? {
         
-        guard let buffer = CVPixelBuffer._create(cgImage: self) else { return nil }
+        guard let buffer = CVPixelBuffer._create(cgImage: self, allocator: allocator, formatType: formatType) else { return nil }
         
         CVPixelBufferLockBaseAddress(buffer, [])
         
-        let pixelData = CVPixelBufferGetBaseAddress(buffer)
         let size = CGSize(width: width, height: height)
+        let pixelData = CVPixelBufferGetBaseAddress(buffer)
         let bytesPerRow = CVPixelBufferGetBytesPerRow(buffer)
         
-        let info = CGImageAlphaInfo.noneSkipFirst.rawValue
+        let info = CGImageAlphaInfo.none.rawValue
         
-        guard let context = CGContext._build(with: info, size: size, pixelData: pixelData, bitsPerComponent: 8, bytesPerRow: bytesPerRow, colorSpace: CGColorSpaceCreateDeviceRGB())
+        guard let context = CGContext._build(with: info, size: size, pixelData: pixelData, bitsPerComponent: 8, bytesPerRow: bytesPerRow, colorSpace: colorSpace)
         else {
             CVPixelBufferUnlockBaseAddress(buffer, [])
             return nil
