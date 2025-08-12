@@ -20,9 +20,9 @@ dependencies: [
 |-|-|
 |loadModel(type:progress:completion:)|載入模型 (從快取 or 網路重新下載)|
 |loadModel(type:)|載入模型 (從快取 or 網路重新下載)|
-|probability(image:completion:)|分析圖片是什麼物體|
+|probability(image:result:)|分析圖片是什麼物體|
 |probability(image:)|分析圖片是什麼物體|
-|probabilities(image:standardValue:completion:)|分析圖片哪一些物體們的機率|
+|probabilities(image:standardValue:result:)|分析圖片哪一些物體們的機率|
 |probabilities(image:standardValue:)|分析圖片哪一些物體們的機率|
 
 ### Example
