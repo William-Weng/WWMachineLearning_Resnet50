@@ -87,11 +87,12 @@ public extension UIImage {
     ///   - allocator: CFAllocator?
     ///   - formatType: OSType
     ///   - colorSpace: CGColorSpace
+    ///   - imageInfo: UInt32
     /// - Returns: CVPixelBuffer?
-    func _pixelBuffer(allocator: CFAllocator? = kCFAllocatorDefault, formatType: OSType = kCVPixelFormatType_32ARGB, colorSpace: CGColorSpace = CGColorSpaceCreateDeviceRGB()) -> CVPixelBuffer? {
+    func _pixelBuffer(allocator: CFAllocator? = kCFAllocatorDefault, formatType: OSType = kCVPixelFormatType_32ARGB, colorSpace: CGColorSpace = CGColorSpaceCreateDeviceRGB(), imageInfo: UInt32 = CGImageAlphaInfo.noneSkipFirst.rawValue) -> CVPixelBuffer? {
         
         autoreleasepool {
-            return cgImage?._pixelBuffer(allocator: allocator, formatType: formatType, colorSpace: colorSpace)
+            return cgImage?._pixelBuffer(allocator: allocator, formatType: formatType, colorSpace: colorSpace, imageInfo: imageInfo)
         }
     }
 
@@ -120,8 +121,9 @@ extension CGImage {
     ///   - allocator: CFAllocator?
     ///   - formatType: OSType
     ///   - colorSpace: CGColorSpace
+    ///   - imageInfo: UInt32
     /// - Returns: [CVPixelBuffer?](https://blog.csdn.net/q345911572/article/details/117551676)
-    func _pixelBuffer(allocator: CFAllocator? = kCFAllocatorDefault, formatType: OSType = kCVPixelFormatType_32ARGB, colorSpace: CGColorSpace = CGColorSpaceCreateDeviceRGB()) -> CVPixelBuffer? {
+    func _pixelBuffer(allocator: CFAllocator? = kCFAllocatorDefault, formatType: OSType = kCVPixelFormatType_32ARGB, colorSpace: CGColorSpace = CGColorSpaceCreateDeviceRGB(), imageInfo: UInt32) -> CVPixelBuffer? {
         
         guard let buffer = CVPixelBuffer._create(cgImage: self, allocator: allocator, formatType: formatType) else { return nil }
         
@@ -130,10 +132,8 @@ extension CGImage {
         let size = CGSize(width: width, height: height)
         let pixelData = CVPixelBufferGetBaseAddress(buffer)
         let bytesPerRow = CVPixelBufferGetBytesPerRow(buffer)
-        
-        let info = CGImageAlphaInfo.none.rawValue
-        
-        guard let context = CGContext._build(with: info, size: size, pixelData: pixelData, bitsPerComponent: 8, bytesPerRow: bytesPerRow, colorSpace: colorSpace)
+
+        guard let context = CGContext._build(with: imageInfo, size: size, pixelData: pixelData, bitsPerComponent: 8, bytesPerRow: bytesPerRow, colorSpace: colorSpace)
         else {
             CVPixelBufferUnlockBaseAddress(buffer, [])
             return nil

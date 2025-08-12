@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWMachineLearning_Resnet50",
       "state" : {
-        "revision" : "1004d1fb20d27cad32ec1ca13c0ac137f38a98e6",
-        "version" : "1.1.0"
+        "revision" : "514f248ba0040eeb8b21066ebad9f6264fb93570",
+        "version" : "1.1.1"
       }
     },
     {

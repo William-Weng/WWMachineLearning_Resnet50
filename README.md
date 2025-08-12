@@ -11,7 +11,7 @@
 
 ```bash
 dependencies: [
-    .package(url: "https://github.com/William-Weng/WWMachineLearning_Resnet50.git", .upToNextMajor(from: "1.1.0"))
+    .package(url: "https://github.com/William-Weng/WWMachineLearning_Resnet50.git", .upToNextMajor(from: "1.1.2"))
 ]
 ```
 
@@ -36,7 +36,8 @@ final class ViewController: UIViewController {
         super.viewDidLoad()
         
         Task {
-            _ = await WWMachineLearning.Resnet50.shared.loadModel()
+            let url = await WWMachineLearning.Resnet50.shared.loadModel()
+            print(url)
         }
     }
     

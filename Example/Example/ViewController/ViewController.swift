@@ -15,7 +15,8 @@ final class ViewController: UIViewController {
         super.viewDidLoad()
         
         Task {
-            _ = await WWMachineLearning.Resnet50.shared.loadModel()
+            let url = await WWMachineLearning.Resnet50.shared.loadModel()
+            print(url)
         }
     }
     
