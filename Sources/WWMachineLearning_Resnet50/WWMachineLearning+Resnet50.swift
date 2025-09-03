@@ -17,7 +17,7 @@ extension WWMachineLearning {
         
         public static let shared = Resnet50()
                 
-        private var model: MLModel?
+        public private(set) var model: MLModel?
 
         private init() {}
     }
@@ -33,33 +33,18 @@ public extension WWMachineLearning.Resnet50 {
     ///   - completion: Result<URL, Error>
     func loadModel(type: ModelType = .int8lut, progress: ((WWNetworking.DownloadProgressInformation) -> Void)? = nil, completion: @escaping (Result<URL, Error>) -> Void) {
         
-        guard let modelUrl = URL(string: type.urlString()),
-              let folder = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
-        else {
-            return completion(.failure(WWMachineLearning.CustomError.notURL))
-        }
+        let urlString = type.urlString()
         
-        let compiledModelUrl = WWMachineLearning.shared.compiledModelUrl(modelUrl, for: folder)
-        
-        WWMachineLearning.shared.createFolder(folder)
-        
-        if FileManager.default._fileExists(with: compiledModelUrl).isExist {
-            switch WWMachineLearning.shared.cacheModel(with: compiledModelUrl) {
-            case .failure(let error): return completion(.failure(error))
-            case .success(let model): self.model = model; return completion(.success(compiledModelUrl))
-            }
-        }
-        
-        WWMachineLearning.shared.downloadModel(modelUrl: modelUrl, folder: folder) { info in
-            progress?(info)
-        } completion: { downloadResult in
-            switch downloadResult {
+        WWMachineLearning.shared.loadModel(urlString: urlString) { downloadProgress in
+            progress?(downloadProgress)
+        } completion: { result in
+            switch result {
             case .failure(let error): completion(.failure(error))
-            case .success(let model): self.model = model; completion(.success(compiledModelUrl))
+            case .success(let model, let url): self.model = model; completion(.success(url))
             }
         }
     }
-        
+    
     /// [分析圖片是什麼物體](https://developer.apple.com/machine-learning/models/)
     /// - Parameters:
     ///   - image: UIImage?

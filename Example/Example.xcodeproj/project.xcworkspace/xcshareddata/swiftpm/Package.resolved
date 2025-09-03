@@ -1,10 +1,10 @@
 {
-  "originHash" : "e75dd2bef7bfc8547272194ceda68e3df0d00a4698fd9ddcadc36df80e4271ee",
+  "originHash" : "853acbe605b081b2caa633ab7f5a212550429ad9691bb914bee6d52085f1b4ab",
   "pins" : [
     {
       "identity" : "wwmachinelearning_resnet50",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/William-Weng/WWMachineLearning_Resnet50",
+      "location" : "https://github.com/William-Weng/WWMachineLearning_Resnet50.git",
       "state" : {
         "revision" : "84bcbe433cd6627e142cfe085c4b77967d67fe88",
         "version" : "1.1.2"

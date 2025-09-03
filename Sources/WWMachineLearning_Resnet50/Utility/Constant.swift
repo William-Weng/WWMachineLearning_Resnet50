@@ -26,6 +26,8 @@ public extension WWMachineLearning {
         case notMoveFile
         case notModelLoaded
         case notCreatePixelBuffer
+        case preprocessFailure
+        case postprocessFailure
     }
 }
 

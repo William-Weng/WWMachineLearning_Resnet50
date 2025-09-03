@@ -16,8 +16,44 @@ open class WWMachineLearning {
     private init() {}
 }
 
-// MARK: - 小工具
 public extension WWMachineLearning {
+    
+    /// 載入模型 (從快取 or 網路重新下載)
+    /// - Parameters:
+    ///   - urlString: 下載模型URL
+    ///   - progress: 下載進度
+    ///   - completion: Result<URL, Error>
+    func loadModel(urlString: String, progress: ((WWNetworking.DownloadProgressInformation) -> Void)? = nil, completion: @escaping (Result<(MLModel, URL), Error>) -> Void) {
+        
+        guard let modelUrl = URL(string: urlString),
+              let folder = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
+        else {
+            return completion(.failure(WWMachineLearning.CustomError.notURL))
+        }
+        
+        let compiledModelUrl = WWMachineLearning.shared.compiledModelUrl(modelUrl, for: folder)
+        createFolder(folder)
+        
+        if FileManager.default._fileExists(with: compiledModelUrl).isExist {
+            switch WWMachineLearning.shared.cacheModel(with: compiledModelUrl) {
+            case .failure(let error): return completion(.failure(error))
+            case .success(let model): return completion(.success((model, compiledModelUrl)))
+            }
+        }
+        
+        downloadModel(modelUrl: modelUrl, folder: folder) { info in
+            progress?(info)
+        } completion: { downloadResult in
+            switch downloadResult {
+            case .failure(let error): completion(.failure(error))
+            case .success(let model): completion(.success((model, compiledModelUrl)))
+            }
+        }
+    }
+}
+
+// MARK: - 小工具
+private extension WWMachineLearning {
     
     /// 建立儲存Model的資料夾
     /// - Returns: Result<Bool, Error>
