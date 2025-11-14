@@ -297,12 +297,14 @@ extension UIGraphicsImageRendererFormat {
 extension MLModel {
     
     /// 生成MLModel
-    /// - Parameter url: URL
     /// - Returns: Result<MLModel, Error>
-    static func _maker(contentsOf url: URL) -> Result<MLModel, Error> {
+    /// - Parameters:
+    ///   - url: ML模型路徑
+    ///   - configuration: ML模型設定值
+    static func _maker(contentsOf url: URL, configuration: MLModelConfiguration) -> Result<MLModel, Error> {
         
         do {
-            let model = try MLModel(contentsOf: url)
+            let model = try MLModel(contentsOf: url, configuration: configuration)
             return .success(model)
         } catch {
             return .failure(error)

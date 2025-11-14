@@ -12,7 +12,7 @@ let package = Package(
         .library(name: "WWMachineLearning_Resnet50", targets: ["WWMachineLearning_Resnet50"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/William-Weng/WWNetworking", from: "1.8.0")
+        .package(url: "https://github.com/William-Weng/WWNetworking", from: "1.8.12")
     ],
     targets: [
         .target(name: "WWMachineLearning_Resnet50", dependencies: ["WWNetworking"], resources: [.copy("Privacy")]),

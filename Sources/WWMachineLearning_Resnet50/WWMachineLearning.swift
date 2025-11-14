@@ -16,17 +16,20 @@ open class WWMachineLearning {
     private init() {}
 }
 
+// MARK: - 公開函數
 public extension WWMachineLearning {
     
     /// 載入模型 (從快取 or 網路重新下載)
     /// - Parameters:
     ///   - urlString: 下載模型URL
+    ///   - folder: 儲存資料夾
+    ///   - configuration: ML模型設定值
     ///   - progress: 下載進度
     ///   - completion: Result<URL, Error>
-    func loadModel(urlString: String, progress: ((WWNetworking.DownloadProgressInformation) -> Void)? = nil, completion: @escaping (Result<(MLModel, URL), Error>) -> Void) {
+    func loadModel(urlString: String, folder: URL?, configuration: MLModelConfiguration, progress: ((WWNetworking.DownloadProgressInformation) -> Void)? = nil, completion: @escaping (Result<(MLModel, URL), Error>) -> Void) {
         
-        guard let modelUrl = URL(string: urlString),
-              let folder = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
+        guard let folder = folder,
+              let modelUrl = URL(string: urlString)
         else {
             return completion(.failure(WWMachineLearning.CustomError.notURL))
         }
@@ -41,7 +44,7 @@ public extension WWMachineLearning {
             }
         }
         
-        downloadModel(modelUrl: modelUrl, folder: folder) { info in
+        downloadModel(modelUrl: modelUrl, folder: folder, configuration: configuration) { info in
             progress?(info)
         } completion: { downloadResult in
             switch downloadResult {
@@ -82,9 +85,10 @@ private extension WWMachineLearning {
     /// - Parameters:
     ///   - modelUrl: 模型所在的URL
     ///   - folder: 模型完成後所在的資料夾
+    ///   - configuration: ML模型設定值
     ///   - progress: 下載模型進度
     ///   - completion: 完成結果
-    func downloadModel(modelUrl: URL, folder: URL, progress: @escaping ((WWNetworking.DownloadProgressInformation) -> Void), completion: @escaping (Result<MLModel, Error>) -> Void) {
+    func downloadModel(modelUrl: URL, folder: URL, configuration: MLModelConfiguration, progress: @escaping ((WWNetworking.DownloadProgressInformation) -> Void), completion: @escaping (Result<MLModel, Error>) -> Void) {
         
         let uncompiledModelUrl = uncompiledModelUrl(modelUrl, for: folder)
         let compiledModelUrl = compiledModelUrl(modelUrl, for: folder)
@@ -105,7 +109,7 @@ private extension WWMachineLearning {
                 case .success(let isSuccess): if (!isSuccess) { return completion(.failure(CustomError.notMoveFile)) }
                 }
                 
-                this.compileModel(at: uncompiledModelUrl, to: compiledModelUrl) { compileResult in
+                this.compileModel(at: uncompiledModelUrl, to: compiledModelUrl, configuration: configuration) { compileResult in
                     switch compileResult {
                     case .failure(let error): return completion(.failure(error))
                     case .success(let model): return completion(.success(model))
@@ -119,8 +123,9 @@ private extension WWMachineLearning {
     /// - Parameters:
     ///   - uncompiledModelUrl: 未壓縮的模型路徑
     ///   - compiledModelUrl: 壓縮完成後的模型路徑
+    ///   - configuration: ML模型設定值
     ///   - result: Result<MLModel, Error>
-    func compileModel(at uncompiledModelUrl: URL, to compiledModelUrl: URL, result: @escaping (Result<MLModel, Error>) -> Void)  {
+    func compileModel(at uncompiledModelUrl: URL, to compiledModelUrl: URL, configuration: MLModelConfiguration, result: @escaping (Result<MLModel, Error>) -> Void)  {
         
         MLModel.compileModel(at: uncompiledModelUrl) { compileResult in
             
@@ -135,7 +140,7 @@ private extension WWMachineLearning {
                 case .success(let isSuccess): if (!isSuccess) { return result(.failure(CustomError.notMoveFile)) }
                 }
 
-                switch MLModel._maker(contentsOf: compiledModelUrl) {
+                switch MLModel._maker(contentsOf: compiledModelUrl, configuration: configuration) {
                 case .failure(let error): return result(.failure(error))
                 case .success(let model): return result(.success(model))
                 }

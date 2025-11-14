@@ -29,13 +29,15 @@ public extension WWMachineLearning.Resnet50 {
     /// 載入模型 (從快取 or 網路重新下載)
     /// - Parameters:
     ///   - type: 模型類型
+    ///   - folder: 儲存資料夾
+    ///   - configuration: ML模型設定值
     ///   - progress: 下載進度
     ///   - completion: Result<URL, Error>
-    func loadModel(type: ModelType = .int8lut, progress: ((WWNetworking.DownloadProgressInformation) -> Void)? = nil, completion: @escaping (Result<URL, Error>) -> Void) {
+    func loadModel(type: ModelType = .int8lut, folder: URL? = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first, configuration: MLModelConfiguration = .init(), progress: ((WWNetworking.DownloadProgressInformation) -> Void)? = nil, completion: @escaping (Result<URL, Error>) -> Void) {
         
         let urlString = type.urlString()
         
-        WWMachineLearning.shared.loadModel(urlString: urlString) { downloadProgress in
+        WWMachineLearning.shared.loadModel(urlString: urlString, folder: folder, configuration: configuration) { downloadProgress in
             progress?(downloadProgress)
         } completion: { result in
             switch result {
@@ -91,11 +93,13 @@ public extension WWMachineLearning.Resnet50 {
     /// 載入模型 (從快取 or 網路重新下載)
     /// - Parameters:
     ///   - type: 模型類型
+    ///   - folder: 儲存資料夾
+    ///   - configuration: ML模型設定值
     /// - Returns: Result<URL, Error>
-    func loadModel(type: ModelType = .int8lut) async -> Result<URL, Error> {
+    func loadModel(type: ModelType = .int8lut, folder: URL? = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first, configuration: MLModelConfiguration = .init()) async -> Result<URL, Error> {
         
         await withCheckedContinuation { continuation in
-            loadModel(type: type) { continuation.resume(returning: $0) }
+            loadModel(type: type, folder: folder, configuration: configuration) { continuation.resume(returning: $0) }
         }
     }
     

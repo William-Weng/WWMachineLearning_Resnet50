@@ -11,15 +11,15 @@
 
 ```bash
 dependencies: [
-    .package(url: "https://github.com/William-Weng/WWMachineLearning_Resnet50.git", .upToNextMajor(from: "1.1.3"))
+    .package(url: "https://github.com/William-Weng/WWMachineLearning_Resnet50.git", .upToNextMajor(from: "1.1.4"))
 ]
 ```
 
 ### Function - 可用函式
 |函式|功能|
 |-|-|
-|loadModel(type:progress:completion:)|載入模型 (從快取 or 網路重新下載)|
-|loadModel(type:)|載入模型 (從快取 or 網路重新下載)|
+|loadModel(type:folder:configuration:progress:completion:)|載入模型 (從快取 or 網路重新下載)|
+|loadModel(type:folder:configuration:)|載入模型 (從快取 or 網路重新下載)|
 |probability(image:result:)|分析圖片是什麼物體|
 |probability(image:)|分析圖片是什麼物體|
 |probabilities(image:standardValue:result:)|分析圖片哪一些物體們的機率|
