@@ -5,7 +5,7 @@
 - [Use Apple's ResNet (Residual Neural Network) model to determine the probability of what the object in the picture is.](https://developer.apple.com/machine-learning/models/)
 - [利用APPLE的ResNet (Residual Neural Network) 模型來分辨圖片上物體是什麼的機率。](https://medium.com/彼得潘的-swift-ios-app-開發教室/swiftui-使用-coreml-進行圖像辨識-ce02a92573f6)
 
-![](./Example.webp)
+https://github.com/user-attachments/assets/d7b82f26-1229-4641-82f4-4a8500767e45
 
 ### [Installation with Swift Package Manager](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/使用-spm-安裝第三方套件-xcode-11-新功能-2c4ffcf85b4b)
 

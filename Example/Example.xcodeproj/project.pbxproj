@@ -448,7 +448,7 @@
 			repositoryURL = "https://github.com/William-Weng/WWMachineLearning_Resnet50";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.1.3;
+				minimumVersion = 1.1.4;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
